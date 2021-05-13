@@ -39,9 +39,9 @@ public class OutreachPortalApplication {
 		dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
 		String url = System.getenv("DATABASE_HOST");
 		if(url !=null){
-			dataSourceBuilder.url("jdbc:mysql://outreach-db:3306/outreach_portal?useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=10");
+			dataSourceBuilder.url("jdbc:mysql://outreach-db:3306/outreach_portal?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=10");
 		}else{
-			dataSourceBuilder.url("jdbc:mysql://localhost:3306/outreach_portal");
+			dataSourceBuilder.url("jdbc:mysql://localhost:3306/outreach_portal?createDatabaseIfNotExist=true");
 		}
 		dataSourceBuilder.username("root");
 		dataSourceBuilder.password("poojankhatri");
