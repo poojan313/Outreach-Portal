@@ -12,6 +12,7 @@
 	<artifactId>outreach_portal</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>outreach_portal</name>
+	<packaging>jar</packaging>
 	<description>SPE project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
@@ -43,6 +44,9 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<finalName>outreach-portal</finalName>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
