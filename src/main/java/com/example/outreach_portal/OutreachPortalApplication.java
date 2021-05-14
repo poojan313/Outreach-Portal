@@ -8,7 +8,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +23,7 @@ import com.example.outreach_portal.dao.ProfileDao;
 import com.example.outreach_portal.service.Implementation.ProfileServiceImplementation;
 
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
 
 @SpringBootApplication
 public class OutreachPortalApplication {
@@ -31,21 +35,6 @@ public class OutreachPortalApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(OutreachPortalApplication.class, args);
-	}
-
-	@Bean
-	public DataSource getDataSource() {
-		DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
-		dataSourceBuilder.driverClassName("com.mysql.cj.jdbc.Driver");
-		String url = System.getenv("DATABASE_HOST");
-		if(url !=null){
-			dataSourceBuilder.url("jdbc:mysql://outreach-db:3306/outreach_portal?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&autoReconnect=true&failOverReadOnly=false&maxReconnects=10");
-		}else{
-			dataSourceBuilder.url("jdbc:mysql://localhost:3306/outreach_portal?createDatabaseIfNotExist=true");
-		}
-		dataSourceBuilder.username("root");
-		dataSourceBuilder.password("poojankhatri");
-		return dataSourceBuilder.build();
 	}
 
 
