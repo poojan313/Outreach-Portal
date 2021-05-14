@@ -1,0 +1,105 @@
+---
+- name: Docker Pull and Run
+  hosts: all
+  remote_user: root
+  become: true
+  tasks:
+    - name: Install aptitude using apt
+      apt:
+        name: aptitude
+        state: latest
+        update_cache: yes
+        force_apt_get: yes
+
+    - name: Install required system packages
+      apt:
+        name: "{{ item }}"
+        state: latest
+        update_cache: yes
+      loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'software-properties-common','python3', 'python3-pip', 'virtualenv', 'python3-setuptools']
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+
+    - name: Update apt and install docker-ce
+      apt:
+        update_cache: yes
+        name: docker-ce
+        state: latest
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+
+    - name: Docker pull mysql
+      docker_image:
+        name: mysql:8.0.23
+        source: pull
+
+    - name: Create Docker Network
+      docker_network:
+        name: outreach
+
+    - name: Docker pull React-app
+      docker_image:
+        name: poojan31399/op-frontend
+        source: pull
+
+    - name: Docker pull Spring-app
+      docker_image:
+        name: poojan31399/op-backend
+        source: pull
+
+    - name: Remove mysql existing container
+      docker_container:
+        name: outreach-db
+        state: absent
+
+    - name: Remove react existing container
+      docker_container:
+        name: outreach-react
+        state: absent
+
+
+    - name: Remove spring existing container
+      docker_container:
+        name: outreach-spring
+        state: absent
+
+    - name: Create MYSQL container
+      docker_container:
+        name: outreach-db
+        image: mysql:8.0.23
+        networks:
+          - name: "outreach"
+        env:
+          MYSQL_ROOT_PASSWORD: poojankhatri
+          MYSQL_DATABASE: outreach_portal
+        ports:
+          - "8091:3306"
+
+    - name: Create outreach-spring container
+      docker_container:
+        name: outreach-spring
+        image: poojan31399/op-backend
+        networks:
+          - name: "outreach"
+        env:
+          DATABASE_HOST: outreach_p
+        ports:
+          - "8081:8081"
+
+    - name: Create outreach-react container
+      docker_container:
+        name: outreach-react
+        image: poojan31399/op-frontend
+        networks:
+          - name: "outreach"
+        ports:
+          - "3000:3000"
