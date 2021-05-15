@@ -93,7 +93,7 @@
         env:
           DATABASE_HOST: outreach_p
         ports:
-          - "8081:8081"
+          - "8085:8081"
 
     - name: Create outreach-react container
       docker_container:
@@ -102,4 +102,4 @@
         networks:
           - name: "outreach"
         ports:
-          - "3000:3000"
+          - "80:3080"
