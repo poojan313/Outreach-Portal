@@ -2,6 +2,9 @@ package com.example.outreach_portal.controller;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,8 @@ import com.example.outreach_portal.service.FriendService;
 @RestController
 public class FriendController {
 
+	Logger logger = LoggerFactory.getLogger(FriendController.class);
+
 	@Autowired
 	private FriendService friendService;
 	
@@ -28,12 +33,14 @@ public class FriendController {
 	{
 		try
 		{
+			logger.info("Friend request sent");
 			this.friendService.friendRequestSend(friend);
 			
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -45,12 +52,14 @@ public class FriendController {
 	{
 		try
 		{
+			logger.info("Friend request accepted");
 			this.friendService.friendRequestAccept(friend);
 			
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -62,12 +71,14 @@ public class FriendController {
 	{
 		try
 		{
+			logger.info("Get friends");
 			List<User> users = this.friendService.getFriends(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(users,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -79,12 +90,14 @@ public class FriendController {
 	{
 		try
 		{
+			logger.info("Unfriend request");
 			this.friendService.unfriend(friend);
 			
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -94,6 +107,7 @@ public class FriendController {
 	@PostMapping("/checkFriend")
 	public ResponseEntity<?> checkfriend(@RequestBody FriendJson friend)
 	{
+			logger.info("Check Friend");
 	
 			int status = this.friendService.checkStatus(friend);
 			

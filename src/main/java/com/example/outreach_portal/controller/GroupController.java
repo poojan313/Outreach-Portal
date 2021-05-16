@@ -2,6 +2,9 @@ package com.example.outreach_portal.controller;
 
 import java.util.List;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +25,8 @@ import com.example.outreach_portal.service.GroupService;
 @CrossOrigin(origins="*")
 @RestController
 public class GroupController {
-	
+
+	Logger logger = LoggerFactory.getLogger(GroupController.class);
 	@Autowired
 	private GroupService groupService;
 	
@@ -31,12 +35,14 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Get Group info");
 			Group group = this.groupService.getGroupInfo(Integer.parseInt(group_id));
 			
 			return new ResponseEntity<>(group,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -49,12 +55,14 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Get User Group info");
 			List<Group> group = this.groupService.getUserGroup(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(group,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -67,12 +75,14 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Get Group member");
 			List<User> user = this.groupService.getGroupMember(Integer.parseInt(group_id));
 			
 			return new ResponseEntity<>(user,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -85,12 +95,14 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Get recent group info");
 			List<Group> group = this.groupService.getRecentGroup(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(group,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -103,12 +115,14 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Get Group message");
 			List<GroupMessage> group = this.groupService.getGroupMessage(groupJson);
 			
 			return new ResponseEntity<>(group,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -120,11 +134,13 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Send Group message");
 			this.groupService.sendmessage(groupJson);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -136,11 +152,13 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Receive Group Message");
 			this.groupService.recievemessage(groupJson);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -153,11 +171,13 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Add Group Member");
 			this.groupService.addGroupMemeber(groupJson);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -169,11 +189,13 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Leave Group");
 			this.groupService.leaveGroup(groupJson);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -186,11 +208,13 @@ public class GroupController {
 	{
 		try
 		{
+			logger.info("Check group member");
 			this.groupService.isMember(groupJson);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}

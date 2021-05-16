@@ -1,5 +1,7 @@
 package com.example.outreach_portal.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.outreach_portal.JSONEntity.LoginJson;
@@ -18,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class ProfileController {
 
+	Logger logger = LoggerFactory.getLogger(CourseController.class);
 	
 	@Autowired
 	public ProfileService profileService;
@@ -28,13 +31,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Get profile for user with user_id "+user_id);
 			User user = this.profileService.getUser(Integer.parseInt(user_id));
 		
 			return new ResponseEntity<>(user,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -47,13 +51,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Search for "+key);
 			List<User> user = this.profileService.search(key);
 			
 			return new ResponseEntity<>(user,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -70,12 +75,13 @@ public class ProfileController {
 	{
 		try
 		{
-
+			logger.info("Create new user");
 			this.profileService.createProfile(user);
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -87,13 +93,13 @@ public class ProfileController {
 	{
 		try
 		{
-
+			logger.info("Login for a user");
 			int user_id = this.profileService.login(loginDetail);
 			return new ResponseEntity<>(user_id,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
-			
+			logger.error(e.getMessage());
 			return new ResponseEntity<>(-1,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
@@ -104,13 +110,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Get notifications for user with user_id "+user_id);
 			List<Notification> notification = this.profileService.getNotifiaction(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(notification,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -122,13 +129,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Update notifications for user with user_id "+user_id);
 			this.profileService.updateNotification(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -139,13 +147,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Get status of notificaitons for user with user_id "+user_id);
 			int stat = this.profileService.getNotificationStat(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(stat,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -157,13 +166,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Updated profile picture");
 			this.profileService.updateProfilePic(user);
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -174,13 +184,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Updated password");
 			this.profileService.updatePassword(user);
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -190,13 +201,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Updated about");
 			this.profileService.updateAbout(user);
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -206,13 +218,14 @@ public class ProfileController {
 	{
 		try
 		{
-			
+			logger.info("Updated interests");
 			this.profileService.updateInterest(user);
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

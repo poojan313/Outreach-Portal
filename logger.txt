@@ -1,0 +1,8 @@
+Enter what would you like to do
+1.Square Root
+2.Factorial
+3.Natural Logarithm
+4.Power Function
+Enter your choice: 1
+Enter the number: 4
+The square root is: 2.0

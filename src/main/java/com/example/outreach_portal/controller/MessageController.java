@@ -2,6 +2,8 @@ package com.example.outreach_portal.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,7 @@ import com.example.outreach_portal.service.MessageService;
 @RestController
 public class MessageController {
 
+	Logger logger = LoggerFactory.getLogger(Message.class);
 	@Autowired
 	private MessageService msgService;
 	
@@ -30,12 +33,14 @@ public class MessageController {
 	{
 		try
 		{
+			logger.info("Getting message");
 			List<Message> msg = this.msgService.getMsg(friend);
 			
 			return new ResponseEntity<>(msg,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -47,12 +52,14 @@ public class MessageController {
 	{
 		try
 		{
+			logger.info("Getting Recent message for user_id "+user_id);
 			List<RecentMessageJson> msg = this.msgService.getRecentMsg(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(msg,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -65,12 +72,14 @@ public class MessageController {
 	{
 		try
 		{
+			logger.info("Sending message");
 			this.msgService.sendMessage(msg);
 			
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -82,6 +91,7 @@ public class MessageController {
 	{
 		try
 		{
+			logger.info("Receiving message");
 			this.msgService.recieveMessgae(friend);
 			
 			return new ResponseEntity<>(true,HttpStatus.OK);
