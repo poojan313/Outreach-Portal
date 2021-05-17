@@ -46,19 +46,14 @@
       docker_network:
         name: outreach
 
-    - name: Create folder for logs
-      file:
-        path: /home/azureuser/log-info
-        state: directory
-
     - name: Docker pull React-app
       docker_image:
-        name: poojan31399/op-frontend
+        name: poojan31399/op-frontend:latest
         source: pull
 
     - name: Docker pull Spring-app
       docker_image:
-        name: poojan31399/op-backend
+        name: poojan31399/op-backend:latest
         source: pull
 
     - name: Remove mysql existing container
@@ -92,7 +87,7 @@
     - name: Create outreach-spring container
       docker_container:
         name: outreach-spring
-        image: poojan31399/op-backend
+        image: poojan31399/op-backend:latest
         networks:
           - name: "outreach"
         env:
@@ -100,12 +95,12 @@
         ports:
           - "8081:8081"
         volumes:
-          - /homer/azureuser/log-info:/logs
+          - /home/azureuser/log-info:/logs 
 
     - name: Create outreach-react container
       docker_container:
         name: outreach-react
-        image: poojan31399/op-frontend
+        image: poojan31399/op-frontend:latest
         networks:
           - name: "outreach"
         ports:
