@@ -1,5 +1,7 @@
 package com.example.outreach_portal.service.Implementation;
 
+
+
 import java.util.Date;
 import java.util.List;
 
@@ -32,7 +34,9 @@ public class ProjectSeviceImp implements ProjectService{
 	@Override
 	public List<Project> getProject() {
 		
-		return projectDao.findAll();
+		List<Project> project= projectDao.getProject();
+
+		return project;
 	}
 
 	@Override

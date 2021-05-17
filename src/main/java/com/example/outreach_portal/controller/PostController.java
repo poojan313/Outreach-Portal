@@ -32,7 +32,7 @@ public class PostController {
 
 	@Autowired
 	private PostService postService;
-	
+
 	@PostMapping(path="/createPost")
 	public ResponseEntity<?> createPost(@RequestBody PostJson post)
 	{
@@ -48,9 +48,9 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@PostMapping(path="/viewPost")
 	public ResponseEntity<?> viewPost(@RequestBody String post_id)
 	{
@@ -59,7 +59,7 @@ public class PostController {
 			logger.info("View post");
 
 			Post post = this.postService.getPost(Integer.parseInt(post_id));
-			
+
 			return new ResponseEntity<>(post,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -68,10 +68,10 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@PostMapping(path="/getUserPost")
 	public ResponseEntity<?> getuserPost(@RequestBody String user_id)
 	{
@@ -80,7 +80,7 @@ public class PostController {
 			logger.info("Get post");
 
 			List<Post> post = this.postService.viewPost(Integer.parseInt(user_id));
-			
+
 			return new ResponseEntity<>(post,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -89,9 +89,9 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@GetMapping(path="/getAllPost")
 	public ResponseEntity<?> getAllPost()
 	{
@@ -100,7 +100,7 @@ public class PostController {
 			logger.info("Get all post");
 
 			List<Post> post = this.postService.viewAllPost();
-			
+
 			return new ResponseEntity<>(post,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -109,10 +109,10 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@PostMapping(path="/likePost")
 	public ResponseEntity<?> likePost(@RequestBody LikeJson likeJson)
 	{
@@ -121,7 +121,7 @@ public class PostController {
 			logger.info("Like post");
 
 			this.postService.like(likeJson);
-			
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -130,9 +130,9 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@PostMapping(path="/commentPost")
 	public ResponseEntity<?> commentPost(@RequestBody CommentJson commentJson)
 	{
@@ -141,7 +141,7 @@ public class PostController {
 			logger.info("Comment post");
 
 			this.postService.comment(commentJson);
-			
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -150,10 +150,10 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@GetMapping(path="/getLike/{post_id}")
 	public ResponseEntity<?> getLike(@PathVariable String post_id)
 	{
@@ -162,7 +162,7 @@ public class PostController {
 			logger.info("Get like of post");
 
 			List<User> usr=this.postService.viewLike(Integer.parseInt(post_id));
-			
+
 			return new ResponseEntity<>(usr,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -171,9 +171,9 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@GetMapping(path="/getComment/{post_id}")
 	public ResponseEntity<?> getComment(@PathVariable String post_id)
 	{
@@ -182,7 +182,7 @@ public class PostController {
 			logger.info("Get comment of post");
 
 			List<Comment> cmt=this.postService.viewComment(Integer.parseInt(post_id));
-			
+
 			return new ResponseEntity<>(cmt,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -191,13 +191,13 @@ public class PostController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
 
 }

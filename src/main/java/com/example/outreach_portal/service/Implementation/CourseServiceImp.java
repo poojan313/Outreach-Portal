@@ -51,8 +51,15 @@ public class CourseServiceImp implements CourseSercive {
 	@Override
 	public List<Post> getCoursePost(int courseid) {
 		// TODO Auto-generated method stub
-		Course course = courseDao.findById(courseid).get();
-		return postDao.getAllCoursePost(course);
+		try {
+			Course course = courseDao.findById(courseid).get();
+			return postDao.getAllCoursePost(course);
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+		
 	}
 
 	@Override

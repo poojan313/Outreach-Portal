@@ -24,16 +24,16 @@ import com.example.outreach_portal.service.MessageService;
 @RestController
 public class MessageController {
 
-	Logger logger = LoggerFactory.getLogger(Message.class);
+	Logger logger = LoggerFactory.getLogger(MessageController.class);
 	@Autowired
 	private MessageService msgService;
 	
-	@GetMapping(path="/getMsg")
+	@PostMapping(path="/getMsg")
 	public ResponseEntity<?> getMsg(@RequestBody FriendJson friend)
 	{
 		try
 		{
-			logger.info("Getting message");
+			logger.info("Get message");
 			List<Message> msg = this.msgService.getMsg(friend);
 			
 			return new ResponseEntity<>(msg,HttpStatus.OK);
@@ -52,7 +52,7 @@ public class MessageController {
 	{
 		try
 		{
-			logger.info("Getting Recent message for user_id "+user_id);
+			logger.info("Get recent message for "+user_id);
 			List<RecentMessageJson> msg = this.msgService.getRecentMsg(Integer.parseInt(user_id));
 			
 			return new ResponseEntity<>(msg,HttpStatus.OK);
@@ -72,7 +72,7 @@ public class MessageController {
 	{
 		try
 		{
-			logger.info("Sending message");
+			logger.info("Send message");
 			this.msgService.sendMessage(msg);
 			
 			return new ResponseEntity<>(true,HttpStatus.OK);
@@ -91,13 +91,14 @@ public class MessageController {
 	{
 		try
 		{
-			logger.info("Receiving message");
+			logger.info("Receive message");
 			this.msgService.recieveMessgae(friend);
 			
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
 		{
+			logger.error(e.getMessage());
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}

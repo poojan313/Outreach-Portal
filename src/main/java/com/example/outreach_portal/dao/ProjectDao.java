@@ -13,6 +13,9 @@ import com.example.outreach_portal.bean.User;
 
 public interface ProjectDao extends JpaRepository<Project,Integer>{
 	
-	@Query("SELECT p FROM Project p WHERE course= :course order by p.timestamp")
+	@Query("SELECT p FROM Project p WHERE Course= :course order by p.timestamp desc")
 	List<Project> getAllCourseProject(@Param("course") Course course);
+	
+	@Query("SELECT p FROM Project p WHERE Course= null order by p.timestamp desc")
+	List<Project> getProject();
 }

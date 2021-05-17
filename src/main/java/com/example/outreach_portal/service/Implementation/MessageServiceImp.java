@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.Collections;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +47,7 @@ public class MessageServiceImp implements MessageService {
 		Set<User> users = messageDao.getRecieverUser(usr);
 		users.addAll(messageDao.getSenderUSer(usr));
 		
-		TreeMap<Integer,User> map = new TreeMap<>();
+		TreeMap<Integer,User> map = new TreeMap<>(Collections.reverseOrder());
 		
 		for(User u:users)
 		{
@@ -64,10 +66,17 @@ public class MessageServiceImp implements MessageService {
 	@Override
 	public void sendMessage(MessageJson msg) {
 		// TODO Auto-generated method stub
-		User user1 = profileDao.findById(msg.getSender()).get();
-		User user2 = profileDao.findById(msg.getReciever()).get();
-		Message message = new Message(user1,user2,msg.getMessage(),0,new Date());
-		messageDao.save(message);
+		try {
+			User user1 = profileDao.findById(msg.getSender()).get();
+			User user2 = profileDao.findById(msg.getReciever()).get();
+			Message message = new Message(user1,user2,msg.getMessage(),0,new Date());
+			messageDao.save(message);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage()+" "+e.getClass().getName());
+		}
+
 		
 		
 		

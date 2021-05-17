@@ -17,9 +17,12 @@ public class Group {
 	@Column(nullable=false)
 	private String about;
 
-	public Group(Integer id, String name, String about) {
+	public Group() {
+		
+	}
+	public Group(String name, String about) {
 		super();
-		this.id = id;
+
 		this.name = name;
 		this.about = about;
 	}

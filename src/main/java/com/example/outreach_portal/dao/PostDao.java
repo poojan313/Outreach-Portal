@@ -16,11 +16,11 @@ public interface PostDao extends JpaRepository<Post,Integer>{
 	@Query("SELECT p FROM Post p WHERE p.user = :user and p.course= null and isProject=0")
 	List<Post> getUserPost(@Param("user") User user);
 	
-	@Query("SELECT p FROM Post p WHERE p.course= null and isProject=0 order by p.timestamp desc")
+	@Query("SELECT p FROM Post p WHERE p.course= null order by p.timestamp desc")
 	List<Post> getAllPost();
 	
 	
-	@Query("SELECT p FROM Post p WHERE course= :course order by p.timestamp")
+	@Query("SELECT p FROM Post p WHERE course= :course order by p.timestamp desc")
 	List<Post> getAllCoursePost(@Param("course") Course course);
 	
 	

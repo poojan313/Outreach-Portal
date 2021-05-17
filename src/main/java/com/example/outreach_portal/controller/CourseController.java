@@ -30,7 +30,7 @@ public class CourseController {
 	Logger logger = LoggerFactory.getLogger(CourseController.class);
 	@Autowired
 	private CourseServiceImp courseService;
-	
+
 	@GetMapping(path="/course/{course_id}")
 	public ResponseEntity<?> friendReq(@PathVariable String course_id)
 	{
@@ -38,7 +38,7 @@ public class CourseController {
 		{
 			logger.info("Getting course with course id "+course_id);
 			Course course = this.courseService.getCourse(Integer.parseInt(course_id));
-			
+
 			return new ResponseEntity<>(course,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -47,9 +47,9 @@ public class CourseController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@GetMapping(path="/getCourseProject/{course_id}")
 	public ResponseEntity<?> getCourseProject(@PathVariable String course_id)
 	{
@@ -57,7 +57,7 @@ public class CourseController {
 		{
 			logger.info("Get list of projects for course with course_id "+course_id);
 			List<Project> project = this.courseService.getCourseProject(Integer.parseInt(course_id));
-			
+
 			return new ResponseEntity<>(project,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -66,10 +66,10 @@ public class CourseController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@GetMapping(path="/getCoursePost/{course_id}")
 	public ResponseEntity<?> getCoursePost(@PathVariable String course_id)
 	{
@@ -77,7 +77,7 @@ public class CourseController {
 		{
 			logger.info("Get posts for course_id "+course_id);
 			List<Post> post = this.courseService.getCoursePost(Integer.parseInt(course_id));
-			
+
 			return new ResponseEntity<>(post,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -86,10 +86,10 @@ public class CourseController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@GetMapping(path="/getCourseFollower/{course_id}")
 	public ResponseEntity<?> getCourseFollower(@PathVariable String course_id)
 	{
@@ -97,7 +97,7 @@ public class CourseController {
 		{
 			logger.info("Get course follower for course_id "+course_id);
 			List<User> user = this.courseService.getFollower(Integer.parseInt(course_id));
-			
+
 			return new ResponseEntity<>(user,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -106,10 +106,10 @@ public class CourseController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@GetMapping(path="/getCourseInstructor/{course_id}")
 	public ResponseEntity<?> getCourseInstructor(@PathVariable String course_id)
 	{
@@ -117,7 +117,7 @@ public class CourseController {
 		{
 			logger.info("Get course instructor for course_id "+course_id);
 			List<User> user = this.courseService.getInstructor(Integer.parseInt(course_id));
-			
+
 			return new ResponseEntity<>(user,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -126,10 +126,10 @@ public class CourseController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@GetMapping(path="/getUserCourse/{user_id}")
 	public ResponseEntity<?> getUserCourse(@PathVariable String user_id)
 	{
@@ -137,7 +137,7 @@ public class CourseController {
 		{
 			logger.info("Get users for user_id "+user_id);
 			List<Course> course = this.courseService.getUserCourse(Integer.parseInt(user_id));
-			
+
 			return new ResponseEntity<>(course,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -146,10 +146,10 @@ public class CourseController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
+
+
 	@PostMapping(path="/followCourse")
 	public ResponseEntity<?> followCourse(@RequestBody CourseJson courseJson)
 	{
@@ -157,7 +157,7 @@ public class CourseController {
 		{
 			logger.info("Started following a new course");
 			this.courseService.followCourse(courseJson);
-			
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -166,16 +166,7 @@ public class CourseController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

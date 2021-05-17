@@ -2,10 +2,13 @@ package com.example.outreach_portal.service.Implementation;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.outreach_portal.JSONEntity.GroupJson;
 import com.example.outreach_portal.JSONEntity.GroupMessageJson;
 import com.example.outreach_portal.bean.Group;
 import com.example.outreach_portal.bean.GroupMembers;
@@ -16,6 +19,7 @@ import com.example.outreach_portal.dao.GroupMemberDao;
 import com.example.outreach_portal.dao.GroupMessageDao;
 import com.example.outreach_portal.dao.ProfileDao;
 import com.example.outreach_portal.service.GroupService;
+
 
 @Service
 public class GroupServiceImp implements GroupService{
@@ -55,10 +59,15 @@ public class GroupServiceImp implements GroupService{
 	}
 
 	@Override
-	public List<Group> getRecentGroup(int user_id) {
+	public Set<Group> getRecentGroup(int user_id) {
 		// TODO Auto-generated method stub
 		User user  = profileDao.findById(user_id).get();
-		return groupMessageDao.getRecentGroup(user);
+		Map<Group,Date> map = groupMessageDao.getRecentGroup(user);
+		for(java.util.Map.Entry<Group,Date> entry: map.entrySet()) {
+
+		      System.out.println(entry.getKey().getName());
+		    }
+		return groupMessageDao.getRecentGroup(user).keySet();
 	}
 
 	@Override
@@ -74,15 +83,8 @@ public class GroupServiceImp implements GroupService{
 		// TODO Auto-generated method stub
 		User sender  = profileDao.findById(groupJson.getUser_id()).get();
 		Group group = groupDao.findById(groupJson.getGroup_id()).get();
-		List<User> recivers = groupMemberDao.getGroupMember(group);
-		for(User rec:recivers)
-		{
-			if(rec.getUser_id()!=sender.getUser_id())
-			{
-				GroupMessage msg = new GroupMessage(sender,rec,group,groupJson.getMessage(),0,new Date());
-				groupMessageDao.save(msg);
-			}
-		}
+			GroupMessage msg = new GroupMessage(sender,null,group,groupJson.getMessage(),1,new Date());
+			groupMessageDao.save(msg);
 		
 	}
 
@@ -98,8 +100,12 @@ public class GroupServiceImp implements GroupService{
 	public void addGroupMemeber(GroupMessageJson groupJson) {
 		User rec  = profileDao.findById(groupJson.getUser_id()).get();
 		Group group = groupDao.findById(groupJson.getGroup_id()).get();
+		String r = groupMemberDao.isMember(group, rec);
+		if(r!=null)
+			return ;
 		GroupMembers m = new GroupMembers(rec,group,1);
 		groupMemberDao.save(m);
+		groupJson.setMessage(rec.getName()+" added");
 		sendmessage(groupJson);
 		
 		
@@ -124,6 +130,16 @@ public class GroupServiceImp implements GroupService{
 		return 1;
 	}
 
+	@Override
+	public void createGroup(GroupJson groupJson) {
+		// TODO Auto-generated method stub
+		Group group = new Group(groupJson.getName(),groupJson.getAbout());
+		groupDao.save(group);
+		User sender  = profileDao.findById(groupJson.getUser_id()).get();
+		addGroupMemeber(new GroupMessageJson(groupJson.getUser_id(),group.getId(),sender.getName()+" created the group"));
+		
+	}
 	
+
 
 }

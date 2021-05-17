@@ -24,7 +24,7 @@ public interface GroupMemberDao extends JpaRepository<GroupMembers,Integer>{
 	@Transactional
 	@Modifying
 	@Query("Delete from GroupMembers g where g.user =:user and g.group=:group")
-	String leaveGroup(@Param("user") User user1,@Param("group") Group group);
+	int leaveGroup(@Param("user") User user1,@Param("group") Group group);
 	
 	
 	@Query("Select g.user from GroupMembers g where g.group=:group and g.user = :user")

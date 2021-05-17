@@ -16,7 +16,7 @@ import com.example.outreach_portal.bean.User;
 
 public interface MessageDao extends JpaRepository<Message,Integer>{
 
-	@Query("SELECT m FROM Message m WHERE (m.user1 = :user1 and m.user2=:user2) or (m.user1 = :user2 and m.user2=:user1) order by m.timestamp desc")
+	@Query("SELECT m FROM Message m WHERE (m.user1 = :user1 and m.user2=:user2) or (m.user1 = :user2 and m.user2=:user1) order by m.timestamp")
 	List<Message> getMsg(@Param("user1") User user1,@Param("user2") User user2);
 	
 	@Query("SELECT distinct m.user2 FROM Message m WHERE m.user1 = :user ")
@@ -31,7 +31,7 @@ public interface MessageDao extends JpaRepository<Message,Integer>{
 	@Transactional
 	@Modifying
 	@Query("Update Message m set m.status=1 WHERE (m.user1 = :user2 and m.user2=:user1)")
-	String recieveMsg(@Param("user1") User user1,@Param("user2") User user2);
+	void recieveMsg(@Param("user1") User user1,@Param("user2") User user2);
 	
 	
 	

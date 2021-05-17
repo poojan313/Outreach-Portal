@@ -26,14 +26,28 @@ public class ProfileServiceImplementation implements ProfileService {
 	
 	@Override
 	public boolean createProfile(User user) {
+		try {
+			profileDao.save(user);
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
 		
-		profileDao.save(user);
 		return true;
 	}
 	@Override
 	public User getUser(int user_id)
 	{
-		return (User)profileDao.findById(user_id).get();
+		try {
+			return (User)profileDao.findById(user_id).get();
+		}
+		catch (Exception e)
+		{
+			return null;
+		}
+		
+		
 	}
 	
 	

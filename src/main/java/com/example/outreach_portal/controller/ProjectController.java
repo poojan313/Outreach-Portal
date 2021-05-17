@@ -27,7 +27,7 @@ public class ProjectController {
 
 	@Autowired
 	private ProjectService projectService;
-	
+
 	@GetMapping("/project")
 	public ResponseEntity<?> getProject()
 	{
@@ -35,7 +35,7 @@ public class ProjectController {
 		{
 			logger.info("Get project");
 			List<Project> project = this.projectService.getProject();
-			
+
 			return new ResponseEntity<>(project,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -43,9 +43,9 @@ public class ProjectController {
 			logger.error(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@PostMapping("/project")
 	public ResponseEntity<?> createProject(@RequestBody ProjectJson projectJson)
 	{
@@ -53,7 +53,7 @@ public class ProjectController {
 		{
 			logger.info("Post project");
 			this.projectService.createProject(projectJson);
-			
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -61,11 +61,11 @@ public class ProjectController {
 			logger.error(e.getMessage());
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 
 }

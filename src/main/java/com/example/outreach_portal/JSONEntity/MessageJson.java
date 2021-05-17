@@ -6,6 +6,12 @@ public class MessageJson {
 	private String message;
 	
 	
+	public MessageJson(int sender, int reciever, String message) {
+		super();
+		this.sender = sender;
+		this.reciever = reciever;
+		this.message = message;
+	}
 	public int getSender() {
 		return sender;
 	}

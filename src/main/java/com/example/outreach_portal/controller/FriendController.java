@@ -27,7 +27,7 @@ public class FriendController {
 
 	@Autowired
 	private FriendService friendService;
-	
+
 	@PostMapping(path="/friendReq")
 	public ResponseEntity<?> friendReq(@RequestBody FriendJson friend)
 	{
@@ -35,7 +35,7 @@ public class FriendController {
 		{
 			logger.info("Friend request sent");
 			this.friendService.friendRequestSend(friend);
-			
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -44,9 +44,9 @@ public class FriendController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@PostMapping(path="/friendAcc")
 	public ResponseEntity<?> friendAcc(@RequestBody FriendJson friend)
 	{
@@ -54,7 +54,7 @@ public class FriendController {
 		{
 			logger.info("Friend request accepted");
 			this.friendService.friendRequestAccept(friend);
-			
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -63,9 +63,9 @@ public class FriendController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@GetMapping(path="/friends")
 	public ResponseEntity<?> getFriend(@RequestBody String user_id)
 	{
@@ -73,7 +73,7 @@ public class FriendController {
 		{
 			logger.info("Get friends");
 			List<User> users = this.friendService.getFriends(Integer.parseInt(user_id));
-			
+
 			return new ResponseEntity<>(users,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -82,9 +82,9 @@ public class FriendController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@DeleteMapping("/unfriend")
 	public ResponseEntity<?> unFriend(@RequestBody FriendJson friend)
 	{
@@ -92,7 +92,7 @@ public class FriendController {
 		{
 			logger.info("Unfriend request");
 			this.friendService.unfriend(friend);
-			
+
 			return new ResponseEntity<>(true,HttpStatus.OK);
 		}
 		catch(Exception e)
@@ -101,19 +101,19 @@ public class FriendController {
 			System.out.println(e.getMessage());
 			return new ResponseEntity<>(false,HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 	}
-	
+
 	@PostMapping("/checkFriend")
 	public ResponseEntity<?> checkfriend(@RequestBody FriendJson friend)
 	{
-			logger.info("Check Friend");
-	
-			int status = this.friendService.checkStatus(friend);
-			
-			return new ResponseEntity<>(status,HttpStatus.OK);
+		logger.info("Check Friend");
+
+		int status = this.friendService.checkStatus(friend);
+
+		return new ResponseEntity<>(status,HttpStatus.OK);
 
 	}
-	
-	
+
+
 }

@@ -8,10 +8,9 @@ public class Course {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable=false,unique=true,length=64)
+	@Column(nullable=false,length=64)
 	private String cid;
 	
 	@Column(nullable=false)
@@ -20,20 +19,20 @@ public class Course {
 	@Column(length=1000)
 	private String about;
 	
-	@Column(nullable=false)
+	@Column
 	private String photo;
 
 	public Course()
 	{
 		
 	}
-	public Course(int id, String course_id, String name, String about, String photo) {
+	public Course(int id,String course_id, String name, String about) {
 		super();
 		this.id = id;
 		this.cid = course_id;
 		this.name = name;
 		this.about = about;
-		this.photo = photo;
+		
 	}
 
 	public int getId() {

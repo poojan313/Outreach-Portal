@@ -27,9 +27,9 @@ public class Course_Instructor {
     	
     }
    
-	public Course_Instructor(Integer id, com.example.outreach_portal.bean.Course course, User user) {
+	public Course_Instructor(com.example.outreach_portal.bean.Course course, User user) {
 		super();
-		this.id = id;
+		
 		Course = course;
 		this.user = user;
 	}
